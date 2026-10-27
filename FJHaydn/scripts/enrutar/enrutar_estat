@@ -1,0 +1,17 @@
+#!/bin/bash
+
+######################################################################
+###  Estat
+######################################################################
+fnc_enrutar_estat() {
+	#echo fnc_enrutar_estat
+	
+	if [[ "$(cat /proc/sys/net/ipv4/ip_forward)" -ne 1 ]]; then
+   	 	echo "Desactivat, falta IP forwarding"
+	elif ! iptables -t nat -C POSTROUTING -o enp6s0 -j MASQUERADE 2>/dev/null; then
+    		echo "Desactivat, falta MASQUERADE"
+	else
+    		echo "Activat"
+	fi
+	
+}
